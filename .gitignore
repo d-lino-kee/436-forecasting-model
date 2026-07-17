@@ -1,0 +1,11 @@
+# Large M5 dataset files (exceed GitHub's 100 MB limit) — download separately
+data/sales_train_evaluation.csv
+data/sales_train_validation.csv
+data/sell_prices.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
