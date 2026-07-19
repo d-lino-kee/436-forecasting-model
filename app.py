@@ -231,8 +231,8 @@ with tab_orders:
     st.caption("Sorted by projected total cost impact. Buyers can edit on_hand inline "
                "if the reported number doesn't match what's actually on the shelf.")
 
-    meta_cols = df.drop_duplicates("id").set_index("id")[["item_id", "dept_id", "cat_id", "store_id"]]
-    order = rec_m.merge(cost_m, on="id").merge(meta_cols, left_on="id", right_index=True)
+    meta_cols = df.drop_duplicates("id")[["id", "item_id", "dept_id", "cat_id", "store_id"]]
+    order = rec_m.merge(cost_m, on="id").merge(meta_cols, on="id")
     order = order.merge(cost_b[["id", "total_cost"]].rename(columns={"total_cost": "baseline_cost"}), on="id")
     order["vs_baseline"] = order["baseline_cost"] - order["total_cost"]
     order = order.sort_values("total_cost", ascending=False)
@@ -275,7 +275,7 @@ with tab_risk:
                    "buyers who see a stockout will not come back next week.")
 
         # Aggregate projected shortage by store-cat
-        cost_view = cost_m.merge(meta_cols, left_on="id", right_index=True)
+        cost_view = cost_m.merge(meta_cols, on="id")
         by_dept = (cost_view.groupby(["store_id", "dept_id"])["units_short"].sum()
                    .reset_index().sort_values("units_short", ascending=False))
         fig = px.bar(by_dept.head(25), x="units_short", y="dept_id", color="store_id",
@@ -411,7 +411,9 @@ with tab_accuracy:
               "target: < 1.0", delta_color="off")
     c2.metric("Mean MASE", f"{m_view['mase'].mean():.2f}")
     baseline_mase = pd.read_csv(ARTIFACTS / "baseline_mase.csv")
-    win_rate = (m_view.set_index("id")["mase"] < baseline_mase.set_index("id")["mase"]).mean()
+    model_mase = m_view.set_index("id")["mase"]
+    base_mase = baseline_mase.set_index("id")["mase"].reindex(model_mase.index)
+    win_rate = (model_mase < base_mase).mean()
     c3.metric("SKUs where model beats naive", f"{win_rate:.0%}")
 
     fig6 = go.Figure()

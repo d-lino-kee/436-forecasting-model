@@ -52,8 +52,11 @@ def main(num_boost_round: int = 300) -> None:
         rows.append({"id": sid,
                      "mase": M.mase(g["sales"].values, g["forecast"].values, h)})
     baseline_mase = pd.DataFrame(rows)
+    model_mase = metrics.set_index("id")["mase"]
+    base_mase = baseline_mase.set_index("id")["mase"].reindex(model_mase.index)
+    win_rate = (model_mase < base_mase).mean()
     print(f"  baseline median MASE={baseline_mase['mase'].median():.3f} "
-          f"| win rate {(metrics.set_index('id')['mase'] < baseline_mase.set_index('id')['mase']).mean():.1%}")
+          f"| win rate {win_rate:.1%}")
 
     M.save(tm, ARTIFACTS / "lgb_baseline.txt")
     metrics.to_csv(ARTIFACTS / "metrics_baseline.csv", index=False)
