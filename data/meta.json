@@ -1,0 +1,12 @@
+{
+  "test_start": "2016-03-28",
+  "test_days": 28,
+  "stores": [
+    "CA_1",
+    "TX_1",
+    "WI_1"
+  ],
+  "n_series": 600,
+  "date_min": "2014-04-26",
+  "date_max": "2016-04-24"
+}
