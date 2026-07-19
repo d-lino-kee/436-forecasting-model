@@ -18,39 +18,71 @@ in slow-moving inventory and, in fresh categories, generates waste.
 
 ## Quick start
 
-**The prepared data (`data/m5_long.parquet`) and trained model (`artifacts/`) are
-committed**, so you do *not* need the raw M5 CSVs to run the app — just a Python
-environment.
+**TL;DR (Windows): double-click `run.bat`.** That's the whole setup.
 
-### Easiest (Windows)
+You do **not** need to download any data or train anything — the prepared dataset
+(`data/m5_long.parquet`) and the trained model (`artifacts/`) are committed to the
+repo. You only need Python 3.11+ installed.
 
-Double-click **`run.bat`**, or from a PowerShell terminal in the repo root:
+### Easiest — one command (Windows)
+
+From File Explorer, **double-click `run.bat`**. Or, in a PowerShell terminal opened
+in the repo root:
 
 ```powershell
 .\run.ps1
 ```
 
-That creates the virtual environment, installs dependencies, and opens the app at
-http://localhost:8501. It's safe to re-run — it skips anything already done.
+Either one creates the virtual environment, installs the dependencies, and opens the
+app in your browser at **http://localhost:8501**. The first run takes a minute
+(installing packages); after that it's a few seconds. It's safe to re-run — it skips
+any step that's already done.
 
-### Manual
+**To stop the app:** press `Ctrl+C` in the terminal window, or just close it.
+
+### Manual (any OS)
+
+If you'd rather run the steps yourself:
 
 ```powershell
+# 1. Create and populate a virtual environment (one time)
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1                          # macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt   # macOS/Linux: .venv/bin/python -m pip install -r requirements.txt
 
-streamlit run app.py                                 # opens http://localhost:8501
+# 2. Launch the app
+.\.venv\Scripts\python.exe -m streamlit run app.py              # macOS/Linux: .venv/bin/python -m streamlit run app.py
 ```
 
-### Regenerating data + model from the raw CSVs (optional)
-
-Only needed if you want to rebuild from scratch. Requires the three raw M5 CSVs in
-`data/` (see the Data section):
+Calling the venv's Python directly (`.\.venv\Scripts\python.exe`) avoids having to
+"activate" the environment. If you prefer to activate it:
 
 ```powershell
-python -m src.prepare_data                           # writes data/m5_long.parquet + data/meta.json
-python -m src.train                                  # writes artifacts/lgb_baseline.txt
+.\.venv\Scripts\Activate.ps1                                     # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Troubleshooting
+
+- **"python is not recognized"** — Python isn't installed or isn't on your PATH.
+  Install Python 3.11+ from <https://www.python.org/downloads/> and tick
+  *"Add python.exe to PATH"* in the installer, then re-run.
+- **"running scripts is disabled on this system"** (when using `run.ps1` or
+  `Activate.ps1`) — run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned`
+  once in the same terminal, then try again. (Double-clicking `run.bat` avoids this
+  entirely.)
+- **Port 8501 already in use** — an old instance is still running. Close its terminal,
+  or launch on another port: `.\.venv\Scripts\python.exe -m streamlit run app.py --server.port 8502`.
+
+### Regenerating the data + model from scratch (optional)
+
+Not needed to run the app. Only do this if you change the feature/model code and want
+to rebuild. Requires the three raw M5 CSVs (`sales_train_validation.csv`,
+`calendar.csv`, `sell_prices.csv`) in `data/` — see the [Data](#data) section.
+
+```powershell
+.\.venv\Scripts\python.exe -m src.prepare_data       # writes data/m5_long.parquet + data/meta.json
+.\.venv\Scripts\python.exe -m src.train              # writes artifacts/ (model + forecast CSVs)
 ```
 
 ## Results at a glance
