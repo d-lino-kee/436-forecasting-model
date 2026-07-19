@@ -56,10 +56,10 @@ def main(num_boost_round: int = 300) -> None:
           f"| win rate {(metrics.set_index('id')['mase'] < baseline_mase.set_index('id')['mase']).mean():.1%}")
 
     M.save(tm, ARTIFACTS / "lgb_baseline.txt")
-    metrics.to_parquet(ARTIFACTS / "metrics_baseline.parquet", index=False)
-    baseline_mase.to_parquet(ARTIFACTS / "baseline_mase.parquet", index=False)
-    forecast_lgb.to_parquet(ARTIFACTS / "forecast_lgb.parquet", index=False)
-    forecast_naive.to_parquet(ARTIFACTS / "forecast_naive.parquet", index=False)
+    metrics.to_csv(ARTIFACTS / "metrics_baseline.csv", index=False)
+    baseline_mase.to_csv(ARTIFACTS / "baseline_mase.csv", index=False)
+    forecast_lgb.to_csv(ARTIFACTS / "forecast_lgb.csv", index=False)
+    forecast_naive.to_csv(ARTIFACTS / "forecast_naive.csv", index=False)
     print(f"  wrote artifacts to {ARTIFACTS}")
 
 

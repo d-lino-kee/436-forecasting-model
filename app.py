@@ -67,14 +67,14 @@ def load_model():
 
 @st.cache_data(show_spinner=False)
 def load_forecasts():
-    fc = pd.read_parquet(ARTIFACTS / "forecast_lgb.parquet")
-    base = pd.read_parquet(ARTIFACTS / "forecast_naive.parquet")
+    fc = pd.read_csv(ARTIFACTS / "forecast_lgb.csv", parse_dates=["date"])
+    base = pd.read_csv(ARTIFACTS / "forecast_naive.csv", parse_dates=["date"])
     return fc, base
 
 
 @st.cache_data(show_spinner=False)
 def load_metrics():
-    return pd.read_parquet(ARTIFACTS / "metrics_baseline.parquet")
+    return pd.read_csv(ARTIFACTS / "metrics_baseline.csv")
 
 
 @st.cache_data(show_spinner="Re-running forecast with your promo settings...")
@@ -410,7 +410,7 @@ with tab_accuracy:
     c1.metric("Median MASE", f"{m_view['mase'].median():.2f}",
               "target: < 1.0", delta_color="off")
     c2.metric("Mean MASE", f"{m_view['mase'].mean():.2f}")
-    baseline_mase = pd.read_parquet(ARTIFACTS / "baseline_mase.parquet")
+    baseline_mase = pd.read_csv(ARTIFACTS / "baseline_mase.csv")
     win_rate = (m_view.set_index("id")["mase"] < baseline_mase.set_index("id")["mase"]).mean()
     c3.metric("SKUs where model beats naive", f"{win_rate:.0%}")
 
