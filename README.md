@@ -18,17 +18,39 @@ in slow-moving inventory and, in fresh categories, generates waste.
 
 ## Quick start
 
-```bash
-python -m venv .venv && source .venv/bin/activate    # Windows: .venv\Scripts\activate
+**The prepared data (`data/m5_long.parquet`) and trained model (`artifacts/`) are
+committed**, so you do *not* need the raw M5 CSVs to run the app — just a Python
+environment.
+
+### Easiest (Windows)
+
+Double-click **`run.bat`**, or from a PowerShell terminal in the repo root:
+
+```powershell
+.\run.ps1
+```
+
+That creates the virtual environment, installs dependencies, and opens the app at
+http://localhost:8501. It's safe to re-run — it skips anything already done.
+
+### Manual
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1                          # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 
-# One-time: prepare data + train model. ~1 min.
-# Requires the raw M5 CSVs in /mnt/user-data/uploads (see Data section).
-python src/prepare_data.py
-python -m src.train                                  # writes artifacts/lgb_baseline.txt
-
 streamlit run app.py                                 # opens http://localhost:8501
-pytest -q                                            # 12 tests, ~100s
+```
+
+### Regenerating data + model from the raw CSVs (optional)
+
+Only needed if you want to rebuild from scratch. Requires the three raw M5 CSVs in
+`data/` (see the Data section):
+
+```powershell
+python -m src.prepare_data                           # writes data/m5_long.parquet + data/meta.json
+python -m src.train                                  # writes artifacts/lgb_baseline.txt
 ```
 
 ## Results at a glance
