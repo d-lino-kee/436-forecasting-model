@@ -1,9 +1,10 @@
 # Force a consistent light theme so the app looks the same for everyone
-# (including viewers whose browser/OS is in dark mode) with strong contrast.
+# (including viewers whose browser/OS is in dark mode). Palette matches the
+# project deck: warm cream paper, deep forest green, olive-green accents.
 [theme]
 base = "light"
-primaryColor = "#0A5BD3"              # accents, slider fills, links
-backgroundColor = "#FFFFFF"           # main content area
-secondaryBackgroundColor = "#E8EDF4"  # sidebar + widget fills (distinct from white)
-textColor = "#141821"                 # near-black body text
+primaryColor = "#4E7C3E"              # deck olive-green — sliders, links, accents
+backgroundColor = "#F1EFE7"           # warm cream paper (matches slide content)
+secondaryBackgroundColor = "#E6E4D9"  # slightly deeper paper for widgets/tables
+textColor = "#17251B"                 # dark green-black body text
 font = "sans serif"

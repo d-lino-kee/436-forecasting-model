@@ -33,21 +33,23 @@ HORIZON = META["test_days"]
 st.set_page_config(page_title="Weekly Replenishment Planner",
                    page_icon="🛒", layout="wide")
 
-INK = "#1B1B1F"
+INK = "#17251B"
 BLUE = "#0066CC"
 GREEN = "#0A8754"
 AMBER = "#F2A900"
 RED = "#D0021B"
 GREY = "#8A8A93"
+DECK_GREEN = "#15271B"   # deep forest green from the deck (cards, sidebar)
+OLIVE = "#4E7C3E"        # olive accent from the deck
 
 st.markdown(f"""
 <style>
-  /* Base typography — darker, a touch larger, more readable line height */
+  /* Base typography — dark green-black, a touch larger, readable line height */
   html, body, [data-testid="stAppViewContainer"] {{
     color: {INK};
     font-size: 17px;
   }}
-  .stApp {{ background: #FFFFFF; }}
+  .stApp {{ background: {"#F1EFE7"}; }}
   [data-testid="stAppViewContainer"] .stMarkdown p,
   [data-testid="stAppViewContainer"] .stMarkdown li {{
     color: {INK};
@@ -55,7 +57,7 @@ st.markdown(f"""
     line-height: 1.6;
   }}
   h1, h2, h3, h4 {{
-    color: #0C0F16 !important;
+    color: {DECK_GREEN} !important;
     font-weight: 700;
     letter-spacing: -0.02em;
   }}
@@ -63,36 +65,54 @@ st.markdown(f"""
 
   /* Captions were too light grey to read — darken and firm them up */
   [data-testid="stCaptionContainer"], .caption, small {{
-    color: #3C4250 !important;
+    color: #4A5347 !important;
     font-size: 0.86rem !important;
   }}
 
-  /* Sidebar — clear separation from the white main area, bold dark labels */
+  /* Sidebar — deep forest green panel like the deck headers, cream text */
   [data-testid="stSidebar"] {{
-    background: #E8EDF4;
-    border-right: 1px solid #C4D0E0;
+    background: {DECK_GREEN};
+    border-right: 1px solid #0C1710;
   }}
-  [data-testid="stSidebar"] * {{ color: #14203A !important; }}
-  [data-testid="stSidebar"] label,
-  [data-testid="stSidebar"] .stMarkdown p {{
-    font-weight: 600;
-    font-size: 0.97rem;
+  [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
+  [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p,
+  [data-testid="stSidebar"] label, [data-testid="stSidebar"] summary,
+  [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+  [data-testid="stSidebar"] [data-testid="stWidgetLabel"] *,
+  [data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+  [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *,
+  [data-testid="stSidebar"] [data-testid="stCaptionContainer"] {{
+    color: #ECEAD7 !important;
   }}
-  [data-testid="stSidebar"] h1,
-  [data-testid="stSidebar"] h2,
-  [data-testid="stSidebar"] h3 {{ color: #0C0F16 !important; font-weight: 700; }}
+  [data-testid="stSidebar"] label, [data-testid="stSidebar"] summary {{
+    font-weight: 600; font-size: 0.97rem;
+  }}
+  [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
+  [data-testid="stSidebar"] h3 {{ color: #FFFFFF !important; }}
+  /* slider min/max + current-value readouts sit on the dark bg → keep cream */
+  [data-testid="stSidebar"] [data-testid="stSliderTickBarMin"],
+  [data-testid="stSidebar"] [data-testid="stSliderTickBarMax"],
+  [data-testid="stSidebar"] [data-testid="stThumbValue"] {{ color: #ECEAD7 !important; }}
+  /* input controls keep a light fill + dark text so entries stay legible */
+  [data-testid="stSidebar"] input,
+  [data-testid="stSidebar"] [data-baseweb="select"] > div,
+  [data-testid="stSidebar"] [data-baseweb="input"] > div {{
+    background: #F4F3EC !important; color: {INK} !important;
+  }}
+  [data-testid="stSidebar"] [data-baseweb="select"] div {{ color: {INK} !important; }}
 
   /* Metrics — make the headline numbers pop */
-  [data-testid="stMetricValue"] {{ font-weight: 700; color: #0C0F16; }}
-  [data-testid="stMetricLabel"] {{ font-weight: 600; color: #3C4250; }}
+  [data-testid="stMetricValue"] {{ font-weight: 700; color: {DECK_GREEN}; }}
+  [data-testid="stMetricLabel"] {{ font-weight: 600; color: #4A5347; }}
 
-  /* Verdict card */
+  /* Verdict card — deep green panel with cream text, the deck's signature look */
   .verdict {{
-    border-left: 5px solid {BLUE}; background: #F5F8FC; padding: 20px 24px;
-    border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-bottom: 8px;
+    border-left: 5px solid #8FBF6A; background: {DECK_GREEN}; padding: 20px 24px;
+    border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.18); margin-bottom: 8px;
   }}
-  .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #0C0F16; font-weight: 700; }}
-  .verdict p  {{ margin: 0; color: #2A2F3A; font-size: 1.02rem; }}
+  .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #FFFFFF; font-weight: 700; }}
+  .verdict p  {{ margin: 0; color: #DCE6CF; font-size: 1.04rem; }}
+  .verdict p b {{ color: #AED88A; }}
 </style>
 """, unsafe_allow_html=True)
 
