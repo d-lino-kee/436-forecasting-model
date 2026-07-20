@@ -103,6 +103,13 @@ st.markdown(f"""
     background: #F4F3EC !important; color: {INK} !important;
   }}
   [data-testid="stSidebar"] [data-baseweb="select"] div {{ color: {INK} !important; }}
+  /* Multiselect tags (e.g. Stores in scope) — solid green, white text, not clipped */
+  [data-testid="stSidebar"] [data-baseweb="select"] > div {{ padding-left: 8px !important; }}
+  [data-testid="stSidebar"] [data-baseweb="tag"] {{
+    background: #3E6B34 !important; border-radius: 6px !important; overflow: visible !important;
+  }}
+  [data-testid="stSidebar"] [data-baseweb="tag"] span {{ color: #FFFFFF !important; }}
+  [data-testid="stSidebar"] [data-baseweb="tag"] svg {{ fill: #FFFFFF !important; }}
   /* Sidebar expander headers — dark bg so the cream title is visible */
   [data-testid="stSidebar"] details,
   [data-testid="stSidebar"] [data-testid="stExpander"] {{
@@ -132,6 +139,7 @@ st.markdown(f"""
   .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #FFFFFF !important; font-weight: 700; }}
   .verdict p  {{ margin: 0; color: #E9EFE0 !important; font-size: 1.05rem; }}
   .verdict p b {{ color: #B6DE93 !important; }}
+  .verdict h2 .pop {{ color: #B6DE93 !important; font-size: 1.75rem; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -286,7 +294,7 @@ promo_note = f" (with {len(promo_skus)} SKU(s) on {promo_discount:.0%} promotion
 
 st.markdown(f"""
 <div class="verdict">
-  <h2>Order {total_order:,} units across {n_skus_at_risk} SKUs this week{promo_note}</h2>
+  <h2>Order <span class="pop">{total_order:,} units</span> across <span class="pop">{n_skus_at_risk} SKUs</span> this week{promo_note}</h2>
   <p>Following the model saves <b>${saving:,.0f}</b> over the {horizon}-day horizon vs.
      the seasonal-naive baseline, hitting a <b>{fill_m:.1%}</b> fill rate
      (baseline: {fill_b:.1%}).</p>
