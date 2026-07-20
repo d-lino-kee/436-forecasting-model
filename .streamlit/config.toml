@@ -1,0 +1,9 @@
+# Force a consistent light theme so the app looks the same for everyone
+# (including viewers whose browser/OS is in dark mode) with strong contrast.
+[theme]
+base = "light"
+primaryColor = "#0A5BD3"              # accents, slider fills, links
+backgroundColor = "#FFFFFF"           # main content area
+secondaryBackgroundColor = "#E8EDF4"  # sidebar + widget fills (distinct from white)
+textColor = "#141821"                 # near-black body text
+font = "sans serif"

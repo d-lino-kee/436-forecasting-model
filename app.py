@@ -42,15 +42,57 @@ GREY = "#8A8A93"
 
 st.markdown(f"""
 <style>
-  .stApp {{ background: #FBFBFC; }}
-  h1, h2, h3 {{ letter-spacing: -0.02em; color: {INK}; }}
-  .verdict {{
-    border-left: 4px solid {BLUE}; background: #FFFFFF; padding: 18px 22px;
-    border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 8px;
+  /* Base typography — darker, a touch larger, more readable line height */
+  html, body, [data-testid="stAppViewContainer"] {{
+    color: {INK};
+    font-size: 17px;
   }}
-  .verdict h2 {{ margin: 0 0 4px 0; font-size: 1.4rem; }}
-  .verdict p  {{ margin: 0; color: #52525B; font-size: .95rem; }}
-  .caption {{ color: {GREY}; font-size: .8rem; }}
+  .stApp {{ background: #FFFFFF; }}
+  [data-testid="stAppViewContainer"] .stMarkdown p,
+  [data-testid="stAppViewContainer"] .stMarkdown li {{
+    color: {INK};
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }}
+  h1, h2, h3, h4 {{
+    color: #0C0F16 !important;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }}
+  h1 {{ font-size: 2.1rem; }}
+
+  /* Captions were too light grey to read — darken and firm them up */
+  [data-testid="stCaptionContainer"], .caption, small {{
+    color: #3C4250 !important;
+    font-size: 0.86rem !important;
+  }}
+
+  /* Sidebar — clear separation from the white main area, bold dark labels */
+  [data-testid="stSidebar"] {{
+    background: #E8EDF4;
+    border-right: 1px solid #C4D0E0;
+  }}
+  [data-testid="stSidebar"] * {{ color: #14203A !important; }}
+  [data-testid="stSidebar"] label,
+  [data-testid="stSidebar"] .stMarkdown p {{
+    font-weight: 600;
+    font-size: 0.97rem;
+  }}
+  [data-testid="stSidebar"] h1,
+  [data-testid="stSidebar"] h2,
+  [data-testid="stSidebar"] h3 {{ color: #0C0F16 !important; font-weight: 700; }}
+
+  /* Metrics — make the headline numbers pop */
+  [data-testid="stMetricValue"] {{ font-weight: 700; color: #0C0F16; }}
+  [data-testid="stMetricLabel"] {{ font-weight: 600; color: #3C4250; }}
+
+  /* Verdict card */
+  .verdict {{
+    border-left: 5px solid {BLUE}; background: #F5F8FC; padding: 20px 24px;
+    border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-bottom: 8px;
+  }}
+  .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #0C0F16; font-weight: 700; }}
+  .verdict p  {{ margin: 0; color: #2A2F3A; font-size: 1.02rem; }}
 </style>
 """, unsafe_allow_html=True)
 
