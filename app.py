@@ -65,9 +65,12 @@ st.markdown(f"""
 
   /* Captions were too light grey to read — darken and firm them up */
   [data-testid="stCaptionContainer"], .caption, small {{
-    color: #4A5347 !important;
-    font-size: 0.86rem !important;
+    color: #3A4432 !important;
+    font-size: 0.87rem !important;
   }}
+  /* but sidebar captions sit on dark green → keep them cream */
+  [data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+  [data-testid="stSidebar"] .caption {{ color: #D7D3BE !important; }}
 
   /* Sidebar — deep forest green panel like the deck headers, cream text */
   [data-testid="stSidebar"] {{
@@ -100,19 +103,35 @@ st.markdown(f"""
     background: #F4F3EC !important; color: {INK} !important;
   }}
   [data-testid="stSidebar"] [data-baseweb="select"] div {{ color: {INK} !important; }}
+  /* Sidebar expander headers — dark bg so the cream title is visible */
+  [data-testid="stSidebar"] details,
+  [data-testid="stSidebar"] [data-testid="stExpander"] {{
+    background: transparent !important;
+    border: 1px solid #33513C !important; border-radius: 8px !important;
+  }}
+  [data-testid="stSidebar"] details > summary,
+  [data-testid="stSidebar"] [data-testid="stExpander"] summary {{
+    background: #21382A !important; border-radius: 8px !important;
+    color: #ECEAD7 !important; font-weight: 700;
+  }}
+  [data-testid="stSidebar"] details > summary:hover,
+  [data-testid="stSidebar"] [data-testid="stExpander"] summary:hover {{
+    background: #2A4634 !important; color: #FFFFFF !important;
+  }}
+  [data-testid="stSidebar"] details summary svg {{ fill: #ECEAD7 !important; }}
 
   /* Metrics — make the headline numbers pop */
   [data-testid="stMetricValue"] {{ font-weight: 700; color: {DECK_GREEN}; }}
-  [data-testid="stMetricLabel"] {{ font-weight: 600; color: #4A5347; }}
+  [data-testid="stMetricLabel"] {{ font-weight: 700; color: #333D2C; }}
 
   /* Verdict card — deep green panel with cream text, the deck's signature look */
   .verdict {{
     border-left: 5px solid #8FBF6A; background: {DECK_GREEN}; padding: 20px 24px;
     border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.18); margin-bottom: 8px;
   }}
-  .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #FFFFFF; font-weight: 700; }}
-  .verdict p  {{ margin: 0; color: #DCE6CF; font-size: 1.04rem; }}
-  .verdict p b {{ color: #AED88A; }}
+  .verdict h2 {{ margin: 0 0 6px 0; font-size: 1.55rem; color: #FFFFFF !important; font-weight: 700; }}
+  .verdict p  {{ margin: 0; color: #E9EFE0 !important; font-size: 1.05rem; }}
+  .verdict p b {{ color: #B6DE93 !important; }}
 </style>
 """, unsafe_allow_html=True)
 
