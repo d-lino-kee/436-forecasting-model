@@ -103,10 +103,17 @@ st.markdown(f"""
     background: #F4F3EC !important; color: {INK} !important;
   }}
   [data-testid="stSidebar"] [data-baseweb="select"] div {{ color: {INK} !important; }}
-  /* Multiselect tags (e.g. Stores in scope) — solid green, white text, not clipped */
-  [data-testid="stSidebar"] [data-baseweb="select"] > div {{ padding-left: 8px !important; }}
+  /* Multiselect tags (e.g. Stores in scope) — solid green, white text, never clipped.
+     The value container scroll-clips the first tag when unfocused, so force the
+     container (and its inner wrappers) to overflow: visible and wrap. */
+  [data-testid="stSidebar"] [data-baseweb="select"] > div,
+  [data-testid="stSidebar"] [data-baseweb="select"] > div > div {{
+    overflow: visible !important;
+  }}
+  [data-testid="stSidebar"] [data-baseweb="select"] > div {{ padding-left: 10px !important; }}
   [data-testid="stSidebar"] [data-baseweb="tag"] {{
-    background: #3E6B34 !important; border-radius: 6px !important; overflow: visible !important;
+    background: #3E6B34 !important; border-radius: 6px !important;
+    margin: 3px 5px 3px 0 !important; flex: 0 0 auto !important; max-width: none !important;
   }}
   [data-testid="stSidebar"] [data-baseweb="tag"] span {{ color: #FFFFFF !important; }}
   [data-testid="stSidebar"] [data-baseweb="tag"] svg {{ fill: #FFFFFF !important; }}
