@@ -211,7 +211,12 @@ with st.sidebar:
     st.caption("Every setting re-runs the recommendation.")
 
     with st.expander("📅 Store & horizon", expanded=True):
-        stores = st.multiselect("Stores in scope", META["stores"], default=META["stores"])
+        st.markdown("**Stores in scope**")
+        _picked = [s for s in META["stores"]
+                   if st.checkbox(s, value=True, key=f"store_{s}")]
+        stores = _picked or META["stores"]
+        if not _picked:
+            st.caption("No store selected — showing all stores.")
         category = st.selectbox("Category filter",
                                 ["All", "FOODS", "HOBBIES", "HOUSEHOLD"], index=0)
         horizon = st.slider("Forecast horizon (days)", 7, HORIZON, HORIZON, 7)
