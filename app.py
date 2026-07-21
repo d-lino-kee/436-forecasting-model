@@ -92,10 +92,24 @@ st.markdown(f"""
   }}
   [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
   [data-testid="stSidebar"] h3 {{ color: #FFFFFF !important; }}
-  /* slider min/max + current-value readouts sit on the dark bg → keep cream */
+  /* slider min/max + current-value readouts — force always visible (Streamlit
+     fades these until hover), cream so they read on the dark sidebar */
   [data-testid="stSidebar"] [data-testid="stSliderTickBarMin"],
   [data-testid="stSidebar"] [data-testid="stSliderTickBarMax"],
-  [data-testid="stSidebar"] [data-testid="stThumbValue"] {{ color: #ECEAD7 !important; }}
+  [data-testid="stSidebar"] [data-testid="stThumbValue"],
+  [data-testid="stSidebar"] [data-testid="stTickBar"] > div {{
+    color: #ECEAD7 !important; opacity: 1 !important; visibility: visible !important;
+  }}
+  /* Sidebar buttons (e.g. Reset to defaults) — solid green, always visible */
+  [data-testid="stSidebar"] [data-testid="stButton"] button,
+  [data-testid="stSidebar"] .stButton button {{
+    background: #3E6B34 !important; border: 1px solid #5A8A48 !important;
+    color: #FFFFFF !important; font-weight: 600 !important;
+  }}
+  [data-testid="stSidebar"] [data-testid="stButton"] button * {{ color: #FFFFFF !important; }}
+  [data-testid="stSidebar"] [data-testid="stButton"] button:hover {{
+    background: #4E7C3E !important; border-color: #8FBF6A !important;
+  }}
   /* input controls keep a light fill + dark text so entries stay legible */
   [data-testid="stSidebar"] input,
   [data-testid="stSidebar"] [data-baseweb="select"] > div,

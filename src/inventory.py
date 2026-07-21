@@ -158,13 +158,16 @@ def project_costs(forecast: pd.DataFrame, actual: pd.DataFrame,
 
 def compare_policies(forecast: pd.DataFrame, baseline_forecast: pd.DataFrame,
                      actual: pd.DataFrame, on_hand: pd.Series, prices: pd.Series,
-                     policy: InventoryPolicy, horizon: int) -> dict:
+                     policy: InventoryPolicy, horizon: int | None = None) -> dict:
     """Run recommend + cost simulation for both the model and the baseline.
 
     Returns the four frames the interface reads: model_recommend, model_cost,
     baseline_recommend, baseline_cost. Same policy and same actuals for both, so
-    the only difference is the forecast driving the order.
+    the only difference is the forecast driving the order. `horizon` defaults to
+    the number of forecast days when not given.
     """
+    if horizon is None:
+        horizon = int(forecast["date"].nunique())
     model_recommend = recommend(forecast, on_hand, prices, policy)
     model_cost = project_costs(forecast, actual, model_recommend, policy, horizon)
     baseline_recommend = recommend(baseline_forecast, on_hand, prices, policy)
